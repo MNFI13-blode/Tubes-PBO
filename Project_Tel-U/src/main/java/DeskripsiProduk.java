@@ -10,6 +10,7 @@
  */
 public class DeskripsiProduk extends javax.swing.JFrame {
     int xx, xy;
+    private DetailProduk Produk;
     /**
      * Creates new form DeskripsiProduk
      */
@@ -70,6 +71,11 @@ public class DeskripsiProduk extends javax.swing.JFrame {
         });
 
         jPanel3.setBackground(new java.awt.Color(159, 21, 33));
+        jPanel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel3MouseDragged(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
         jLabel1.setText("X");
@@ -180,7 +186,18 @@ public class DeskripsiProduk extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x = xx, y = xy);
     }//GEN-LAST:event_formMouseDragged
+
+    private void jPanel3MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel3MouseDragged
+
+    public DeskripsiProduk(DetailProduk Produk) {
+        this.Produk = Produk;
+    }
     
+    public void infoProduk(){
+        
+    }
     /**
      * @param args the command line arguments
      */

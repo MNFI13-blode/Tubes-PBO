@@ -78,6 +78,9 @@
           <Color blue="21" green="15" red="9f" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="jPanel3MouseDragged"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
