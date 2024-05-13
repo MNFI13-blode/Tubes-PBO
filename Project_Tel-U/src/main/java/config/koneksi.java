@@ -26,10 +26,13 @@ public class koneksi {
        
        try{
            conn = DriverManager.getConnection(url, username, password);
+           DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+           connection = (Connection) DriverManager.getConnection(url,username,password);
            System.out.println("Koneksi ke database berhasil!");
        }catch(SQLException e){
+           Logger.getLogger(koneksi.class.getName()).log(Level.SEVERE,null,e);
             System.out.println("Koneksi ke database gagal: " + e.getMessage());
        }
-       return conn;
+       return connection;
     }
 }
