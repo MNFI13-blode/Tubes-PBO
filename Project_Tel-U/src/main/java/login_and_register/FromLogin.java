@@ -3,6 +3,7 @@ package login_and_register;
 import model.model_login;
 import main.DeskripsiProduk;
 import Dao.dao_login;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import  service.service_login;
 /*
@@ -26,6 +27,7 @@ public class FromLogin extends javax.swing.JFrame {
     
     public FromLogin() {
         initComponents();
+        setLocationRelativeTo(null);
         
     }
 
@@ -103,14 +105,16 @@ public class FromLogin extends javax.swing.JFrame {
 
         jSeparator1.setBackground(new java.awt.Color(159, 21, 33));
         jSeparator1.setForeground(new java.awt.Color(159, 21, 33));
+        jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(159, 21, 33)));
 
         jSeparator2.setForeground(new java.awt.Color(159, 21, 33));
+        jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(159, 21, 33)));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(159, 21, 33)));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("       Sign Up");
+        jLabel1.setText("       Sign In");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
@@ -323,7 +327,7 @@ public class FromLogin extends javax.swing.JFrame {
     /**as
      * @param args the command line arguments
      */
-    
+  
     private void prosesLogin(){
       if(validasi() == true){
        String id = jTextField1.getText();
@@ -356,6 +360,7 @@ public class FromLogin extends javax.swing.JFrame {
         }
         return valid;
     }
+  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -383,7 +388,9 @@ public class FromLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+               
                 new FromLogin().setVisible(true);
+                  
             }
         });
     }
