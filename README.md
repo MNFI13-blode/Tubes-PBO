@@ -5,7 +5,7 @@ My SQL di sarankan namanya jangan ada yang di ubah kalau di ubah ubah nanti haru
 
 Service -> interface ||
 modul -> buat getSetter ke database ||
-DAO -> Data Access Object back end yang bakal execusi front end sama back end ||
+DAO -> Data Access Object back end yang bakal execusi inputan front end ke back end ||
 validasi -> untuk hubungin dao dan service dari front end || 
 
 any question langsung tanyain aja di grup 
