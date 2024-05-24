@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import model.model_login;
 import service.service_login;
 import login_and_register.FromLogin;
+import config.token;
 
 
 /**
@@ -55,12 +56,16 @@ public class dao_login implements service_login {
                 nama = rs.getString("username");
                 Level2 = rs.getString("role");
                 
+                String token1 = token.generateToken(nama);
+                
                 DeskripsiProduk menu  = new DeskripsiProduk();
                 menu.setVisible(true);
                 menu.revalidate();
                 
                 FromLogin lg = new FromLogin();
                 lg.tutup = true; 
+               
+                
             }else{
                 JOptionPane.showMessageDialog(null, "Username atau Password Salah", "pesan",JOptionPane.INFORMATION_MESSAGE);
                 FromLogin lg = new FromLogin();

@@ -16,8 +16,8 @@ import  service.service_login;
  * @author oyest
  */
 public class FromLogin extends javax.swing.JFrame {
-
-        int xx,xy;
+    int xx,xy;
+    
     /**
      * Creates new form FromLogin
      */
