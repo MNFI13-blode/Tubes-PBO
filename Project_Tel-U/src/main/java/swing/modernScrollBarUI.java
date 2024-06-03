@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package swing;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,17 +11,14 @@ import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-/**
- *
- * @author oyest
- */
-public class modernScrollBarUI extends BasicScrollBarUI{
+public class ModernScrollBarUI extends BasicScrollBarUI {
+
     private static final int SCROLL_BAR_ALPHA_ROLLOVER = 100;
-     private static final int SCROLL_BAR_ALPHA = 50;
+    private static final int SCROLL_BAR_ALPHA = 50;
     private static final int THUMB_SIZE = 5;
     private static final Color THUMB_COLOR = Color.BLACK;
 
-    public modernScrollBarUI() {
+    public ModernScrollBarUI() {
 
     }
 
@@ -69,5 +63,4 @@ public class modernScrollBarUI extends BasicScrollBarUI{
             setBorder(BorderFactory.createEmptyBorder());
         }
     }
-    
 }

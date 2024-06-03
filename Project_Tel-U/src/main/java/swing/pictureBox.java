@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package swing;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,11 +10,9 @@ import java.awt.RenderingHints;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLayeredPane;
-/**
- *
- * @author oyest
- */
-public class pictureBox extends JLayeredPane{
+
+public class PictureBox extends JLayeredPane {
+
     public Icon getImage() {
         return image;
     }

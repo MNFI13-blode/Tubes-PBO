@@ -10,4 +10,11 @@ package model;
  */
 public class jae {
     
+    private String aneh;
+
+    public jae(String aneh) {
+        this.aneh = aneh;
+    }
+    
+    
 }
