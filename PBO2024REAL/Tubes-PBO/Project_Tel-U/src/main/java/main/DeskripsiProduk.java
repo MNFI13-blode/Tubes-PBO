@@ -5,7 +5,12 @@
 package main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.DriverManager;
+import config.koneksi;
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
 /**
  *
  * @author HP
@@ -34,7 +39,7 @@ public class DeskripsiProduk extends javax.swing.JFrame {
         label_deskripsi = new javax.swing.JLabel();
         btn_beli = new javax.swing.JButton();
         btn_keranjang = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        btn_close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,11 +54,15 @@ public class DeskripsiProduk extends javax.swing.JFrame {
 
         btn_beli.setText("Beli");
 
-        btn_keranjang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/tambah ke keranjang-resize 3.jpg"))); // NOI18N
         btn_keranjang.setText("Tambah ke keranjang");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
-        jLabel5.setText("X");
+        btn_close.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        btn_close.setText("X");
+        btn_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_closeMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,12 +82,12 @@ public class DeskripsiProduk extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel5))
+                                .addComponent(btn_close))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(btn_beli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(label_harga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                                 .addComponent(btn_keranjang)))
                         .addGap(22, 22, 22))))
         );
@@ -90,7 +99,7 @@ public class DeskripsiProduk extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel5)
+                .addComponent(btn_close)
                 .addGap(11, 11, 11)
                 .addComponent(label_nama)
                 .addGap(43, 43, 43)
@@ -100,13 +109,39 @@ public class DeskripsiProduk extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_beli, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_keranjang))
+                    .addComponent(btn_keranjang, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_closeMouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btn_closeMouseClicked
+    
+    public void tampilDataDeskripsi() throws SQLException{
+        Connection conn = (Connection)koneksi.getConnection();
+        String namaProduk = label_nama.getText();
+        String hargaProduk = label_harga.getText();
+        Icon gambarProduk = label_gambar.getIcon();
+        
+        String sql = "SELECT nama_produk,harga,foto FROM barang WHERE id_barang = ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, namaProduk);
+        pst.setString(2, hargaProduk);
+        pst.setBlob(3, (Blob) gambarProduk);
+        
+        ResultSet res = pst.executeQuery();
+        if(res.next()){
+            label_nama.setText(namaProduk);
+            label_harga.setText(hargaProduk);
+            label_gambar.setIcon(gambarProduk);
+        }else{
+            JOptionPane.showMessageDialog(null, "Data tidak ditemukan");
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -144,8 +179,8 @@ public class DeskripsiProduk extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_beli;
+    private javax.swing.JLabel btn_close;
     private javax.swing.JButton btn_keranjang;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel label_deskripsi;
     private javax.swing.JLabel label_gambar;
     private javax.swing.JLabel label_harga;
