@@ -8,6 +8,7 @@ model\model_register.class
 service\service_login.class
 login_and_register\FormRegister.class
 login_and_register\FormRegister$4.class
+main\DeskripsiProduk$4.class
 login_and_register\FromLogin$8.class
 InfoProduk.class
 profile\profile$1.class
@@ -24,6 +25,7 @@ login_and_register\FormRegister$5.class
 login_and_register\FormRegister$8.class
 login_and_register\FromLogin$4.class
 Dao\dao_register.class
+main\DeskripsiProduk$3.class
 login_and_register\FormRegister$3.class
 main\DetailProduk.class
 Search$1.class
