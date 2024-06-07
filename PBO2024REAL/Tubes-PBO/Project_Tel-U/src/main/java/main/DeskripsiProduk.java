@@ -160,24 +160,28 @@ public class DeskripsiProduk extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_closeMouseClicked
     
     public void tampilDataDeskripsi() throws SQLException{
-        Connection conn = (Connection)koneksi.getConnection();
-        String namaProduk = label_nama.getText();
-        String hargaProduk = label_harga.getText();
-        Icon gambarProduk = label_gambar.getIcon();
+        try{
+            Connection conn = (Connection)koneksi.getConnection();
+            String namaProduk = label_nama.getText();
+            String hargaProduk = label_harga.getText();
+            Icon gambarProduk = label_gambar.getIcon();
         
-        String sql = "SELECT nama_produk,harga,foto FROM barang WHERE id_barang = ?";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, namaProduk);
-        pst.setString(2, hargaProduk);
-        pst.setBlob(3, (Blob) gambarProduk);
+            String sql = "SELECT nama_produk,harga,foto FROM barang WHERE id_barang = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, namaProduk);
+            pst.setString(2, hargaProduk);
+            pst.setBlob(3, (Blob) gambarProduk);
         
-        ResultSet res = pst.executeQuery();
-        if(res.next()){
-            label_nama.setText(namaProduk);
-            label_harga.setText(hargaProduk);
-            label_gambar.setIcon(gambarProduk);
-        }else{
-            JOptionPane.showMessageDialog(null, "Data tidak ditemukan");
+            ResultSet res = pst.executeQuery();
+            if(res.next()){
+                label_nama.setText(namaProduk);
+                label_harga.setText(hargaProduk);
+                label_gambar.setIcon(gambarProduk);
+            }else{
+                JOptionPane.showMessageDialog(null, "Data tidak ditemukan");
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
     /**
