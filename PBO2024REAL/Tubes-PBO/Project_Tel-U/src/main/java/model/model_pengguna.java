@@ -27,6 +27,10 @@ public class model_pengguna {
         this.role = role;
         this.foto = new ByteArrayInputStream(data);
     }
+
+    public model_pengguna() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     public String getId_pengguna() {

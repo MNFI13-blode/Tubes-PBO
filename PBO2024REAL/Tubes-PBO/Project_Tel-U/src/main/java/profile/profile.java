@@ -4,17 +4,24 @@
  * and open the template in the editor.
  */
 package profile;
-
+import model.model_pengguna;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import service.service_profil;
 /**
  *
  * @author LENOVO
  */
 public class profile extends javax.swing.JFrame {
-
+    private model_pengguna currentUser;
+    private service_profil profileService;
     /**
      * Creates new form profile
      */
     public profile() {
+        profileService = new service_profil() {};
         initComponents();
     }
 
@@ -226,16 +233,41 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try {
+            updateUserProfile();
+        } catch (SQLException ex) {
+            Logger.getLogger(profile.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+   private void loadUserProfile() throws SQLException {
+        // Assuming you have the user ID. Replace "1" with the actual user ID you want to load.
+        int userId = 1;
+        currentUser = profileService.getmodel_pengguna(userId);
+        if (currentUser != null) {
+            jTextField1.setText(currentUser.getUsername());
+            jTextField2.setText(currentUser.getEmail());
+            jTextField3.setText(currentUser.getAlamat());
+            jComboBox1.setSelectedItem(currentUser.getRole());
+        } else {
+            JOptionPane.showMessageDialog(this, "User not found!");
+        }
+    }
+   private void updateUserProfile() throws SQLException {
+        currentUser.setUsername(jTextField1.getText());
+        currentUser.setEmail(jTextField2.getText());
+        currentUser.setAlamat(jTextField3.getText());
+        currentUser.setRole((String) jComboBox1.getSelectedItem());
+
+        // Implement a method to update the user profile in the service and DAO
+        profileService.updateProfile(currentUser);
+        JOptionPane.showMessageDialog(this, "Profile updated successfully!");
+    }
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
