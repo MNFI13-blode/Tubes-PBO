@@ -6,6 +6,16 @@ package homePage;
 import swing.Background;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import model.modelItem;
+import javax.swing.ImageIcon;
+import service.service_item;
+import java.util.List;
+import Dao.dao_ShowItem;
+import service.service_ItemDAO;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author oyest
@@ -13,7 +23,8 @@ import java.awt.Color;
 public class home extends javax.swing.JFrame {
       int xx,xy;
       private main mainU;
-      
+      private service_ItemDAO itemDao;
+    
     /**
      * Creates new form home
      */
@@ -21,6 +32,7 @@ public class home extends javax.swing.JFrame {
       
         initComponents();
         setBackground(new Color(0,0,0,0));
+        itemDao = new dao_ShowItem();
         init();
     }
     
@@ -28,6 +40,8 @@ public class home extends javax.swing.JFrame {
           mainU = new main();
           mainPanel.setLayout(new BorderLayout());
           mainPanel.add(mainU);
+          testData();
+          setLocationRelativeTo(null);
     }
 
     /**
@@ -56,7 +70,8 @@ public class home extends javax.swing.JFrame {
             }
         });
 
-        header.setOpaque(false);
+        header.setBackground(new java.awt.Color(159, 21, 33));
+        header.setForeground(new java.awt.Color(159, 21, 33));
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
@@ -68,6 +83,8 @@ public class home extends javax.swing.JFrame {
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 75, Short.MAX_VALUE)
         );
+
+        mainPanel.setBackground(new java.awt.Color(159, 21, 33));
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -123,6 +140,33 @@ public class home extends javax.swing.JFrame {
              xx = evt.getX();
              xy = evt.getY();
     }//GEN-LAST:event_formMousePressed
+    private void testData(){
+        mainU.setEvent(new service_item(){
+            @Override
+            public void itemClick(Component com, modelItem item) {
+                System.out.println(item.getItemID());
+                mainU.setSelected(com);
+                mainU.showItem(item);
+            }
+            
+        });
+        try{
+        List<modelItem> items = itemDao.getAllItems();
+        for(modelItem itemD : items){
+            mainU.addItem(itemD);
+        } 
+        }catch(SQLException ex){
+             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        }
+//        int  ID = 1;
+//            for(int i=0; i<5; i++){
+//                mainU.addItem(new modelItem(ID++,"Sepatu Jawir","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lacinia sit amet nulla eu fringilla. Nunc quis dolor vel elit finibus sagittis. Suspendisse risus risus, rutrum a commodo nec, facilisis in est. Donec mi turpis, hendrerit eget risus nec, mattis scelerisque ante. Integer ut ex in quam consectetur ultrices sit amet et mauris. Sed mollis condimentum augue, iaculis sodales leo ullamcorper in. Donec id diam at magna efficitur dignissim. Cras volutpat rhoncus lorem, sit amet viverra ex ultricies at.",160,"Ajawa", 10,new ImageIcon(getClass().getResource("/"))));
+//                mainU.addItem(new modelItem(ID++,"Makanan Kucing","Description",70,"Royal Canin",10, new ImageIcon(getClass().getResource("/"))));
+//            }
+        
+        
+    }
+    
 
     /**
      * @param args the command line arguments

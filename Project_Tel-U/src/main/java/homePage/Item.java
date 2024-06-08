@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.text.DecimalFormat;
+import javax.swing.JLabel;
 
 public class Item extends javax.swing.JPanel {
 
@@ -29,20 +30,41 @@ public class Item extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
+       
     }
 
     private modelItem data;
 
     public void setData(modelItem data) {
         this.data = data;
-//        pic.setImage(data.getImage());
-//        lbItemName.setText(data.getItemName());
+        pictureBox1.setImage(data.getImage());
+        lbItemName.setText(data.getItemName());
+//       lbDescription.setText("<html>" + wrapText(data.getDescription(), 1) + "</html>");
+         lbDescription.setText(truncateText(data.getDescription(), 20));
 //        lbDescription.setText(data.getDescription());
-//        lbBrand.setText(data.getBrandName());
-//        DecimalFormat df = new DecimalFormat("$#,##0.00");
-//        lbPrice.setText(df.format(data.getPrice()));
+        lbBrand.setText(data.getBrandName());
+        DecimalFormat df = new DecimalFormat("$#,##0.00");
+        lbPrice.setText(df.format(data.getPrice()));
     }
-
+    
+        private String truncateText(String text, int maxLength) {
+            if (text.length() <= maxLength) {
+                return text;
+            } else {
+                return text.substring(0, maxLength - 3) + "...";
+            }
+        }
+        
+       private String wrapText(String text, int length) {
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        while (i < text.length()) {
+            sb.append(text.substring(i, Math.min(i + length, text.length())));
+            sb.append("<br>");
+            i += length;
+        }
+        return sb.toString();
+    }
     @Override
     public void paint(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs.create();
@@ -65,6 +87,7 @@ public class Item extends javax.swing.JPanel {
         lbDescription = new javax.swing.JLabel();
         lbPrice = new javax.swing.JLabel();
         lbBrand = new javax.swing.JLabel();
+        pictureBox1 = new swing.PictureBox();
 
         lbItemName.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         lbItemName.setForeground(new java.awt.Color(76, 76, 76));
@@ -88,13 +111,14 @@ public class Item extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(lbBrand)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbPrice))
-                    .addComponent(lbItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbItemName, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(lbDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
@@ -104,7 +128,9 @@ public class Item extends javax.swing.JPanel {
                 .addComponent(lbItemName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbDescription)
-                .addGap(144, 144, 144)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pictureBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPrice)
                     .addComponent(lbBrand))
@@ -117,5 +143,6 @@ public class Item extends javax.swing.JPanel {
     private javax.swing.JLabel lbDescription;
     private javax.swing.JLabel lbItemName;
     private javax.swing.JLabel lbPrice;
+    private swing.PictureBox pictureBox1;
     // End of variables declaration//GEN-END:variables
 }

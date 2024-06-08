@@ -4,26 +4,38 @@
  */
 package model;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 /**
  *
  * @author oyest
  */
 public class modelItem {
-
+    
+    int jumlah;
     int itemID;
     String itemName;
     String description;
     double price;
     String brandName;
-    Icon image;
+    ImageIcon image;
     
-    public modelItem(int itemID, String itemName, String description, double price, String brandName, Icon image) {
+    public modelItem(int itemID, String itemName, String description, double price, String brandName,int jumlah, ImageIcon image) {
         this.itemID = itemID;
         this.itemName = itemName;
         this.description = description;
         this.price = price;
         this.brandName = brandName;
+        this.jumlah = jumlah;
         this.image = image;
+    }
+
+    public int getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(int jumlah) {
+        this.jumlah = jumlah;
     }
 
     public int getItemID() {
@@ -70,7 +82,7 @@ public class modelItem {
         return image;
     }
 
-    public void setImage(Icon image) {
+    public void setImage(ImageIcon image) {
         this.image = image;
     }
     

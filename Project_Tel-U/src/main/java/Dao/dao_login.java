@@ -22,6 +22,7 @@ import model.model_login;
 import service.service_login;
 import login_and_register.FromLogin;
 import config.token;
+import homePage.home;
 
 
 /**
@@ -58,7 +59,7 @@ public class dao_login implements service_login {
                 
                 String token1 = token.generateToken(nama);
                 
-                DeskripsiProduk menu  = new DeskripsiProduk();
+                home menu  = new home();
                 menu.setVisible(true);
                 menu.revalidate();
                 
