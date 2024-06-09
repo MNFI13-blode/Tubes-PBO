@@ -32,13 +32,16 @@ public class DeskripsiProduk extends javax.swing.JFrame {
 
         FormDeskripsi = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        label_gambar = new javax.swing.JLabel();
         label_nama = new javax.swing.JLabel();
         label_harga = new javax.swing.JLabel();
         label_deskripsi = new javax.swing.JLabel();
         btn_beli = new javax.swing.JButton();
         btn_keranjang = new javax.swing.JButton();
         btn_close = new javax.swing.JLabel();
+        label_toko = new javax.swing.JLabel();
+        label_username = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        label_gambar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,8 +59,6 @@ public class DeskripsiProduk extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Deskripsi Produk");
-
-        label_gambar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(159, 21, 33)));
 
         label_nama.setText("Nama Produk");
 
@@ -77,67 +78,98 @@ public class DeskripsiProduk extends javax.swing.JFrame {
             }
         });
 
+        label_toko.setText("Nama Toko");
+
+        label_username.setText("Username Penjual");
+
+        jPanel1.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 0, 0));
+
+        label_gambar.setForeground(new java.awt.Color(255, 255, 255));
+        label_gambar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout FormDeskripsiLayout = new javax.swing.GroupLayout(FormDeskripsi);
         FormDeskripsi.setLayout(FormDeskripsiLayout);
         FormDeskripsiLayout.setHorizontalGroup(
             FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(FormDeskripsiLayout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(jLabel1))
-                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_nama)
                             .addComponent(label_harga)
-                            .addComponent(label_deskripsi))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_close, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(label_deskripsi)
+                            .addComponent(label_username))
+                        .addGap(0, 312, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FormDeskripsiLayout.createSequentialGroup()
-                        .addComponent(btn_beli)
-                        .addGap(54, 54, 54)
-                        .addComponent(btn_keranjang)))
-                .addGap(27, 27, 27))
+                        .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_close))
+                            .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btn_beli)
+                                .addGap(46, 46, 46)
+                                .addComponent(btn_keranjang)))
+                        .addGap(27, 27, 27))
+                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                        .addComponent(label_toko)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         FormDeskripsiLayout.setVerticalGroup(
             FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FormDeskripsiLayout.createSequentialGroup()
-                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel1))
-                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(btn_close)))
                 .addGap(18, 18, 18)
-                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
-                        .addComponent(label_nama)
-                        .addGap(52, 52, 52)
-                        .addComponent(label_harga)
-                        .addGap(54, 54, 54)
-                        .addComponent(label_deskripsi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_beli)
-                            .addComponent(btn_keranjang))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_close)
+                    .addComponent(jLabel1))
+                .addGap(46, 46, 46)
+                .addComponent(label_nama)
+                .addGap(33, 33, 33)
+                .addComponent(label_toko)
+                .addGap(35, 35, 35)
+                .addComponent(label_username)
+                .addGap(39, 39, 39)
+                .addComponent(label_harga)
+                .addGap(42, 42, 42)
+                .addComponent(label_deskripsi)
+                .addGap(110, 110, 110)
+                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_beli)
+                    .addComponent(btn_keranjang))
+                .addContainerGap(36, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(FormDeskripsi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(FormDeskripsi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(FormDeskripsi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(FormDeskripsi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -171,6 +203,10 @@ public class DeskripsiProduk extends javax.swing.JFrame {
             label_deskripsi.setText(deskripsi);
             String harga = Integer.toString(produk.getHargaProduk());
             label_harga.setText(harga);
+            String nama_toko = produk.getNama_toko();
+            label_toko.setText(nama_toko);
+            String username = produk.getUsername();
+            label_username.setText(username);
         }else{
             label_nama.setText("Produk tidak ditemukan");
         }
@@ -231,9 +267,12 @@ public class DeskripsiProduk extends javax.swing.JFrame {
     private javax.swing.JLabel btn_close;
     private javax.swing.JButton btn_keranjang;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_deskripsi;
     private javax.swing.JLabel label_gambar;
     private javax.swing.JLabel label_harga;
     private javax.swing.JLabel label_nama;
+    private javax.swing.JLabel label_toko;
+    private javax.swing.JLabel label_username;
     // End of variables declaration//GEN-END:variables
 }

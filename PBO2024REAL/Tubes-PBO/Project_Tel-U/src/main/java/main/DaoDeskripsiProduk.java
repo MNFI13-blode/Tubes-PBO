@@ -12,7 +12,8 @@ public class DaoDeskripsiProduk {
     public DeskripsiProdukModel getProdukById(int id) {
         DeskripsiProdukModel produk = null;
         Connection conn = koneksi.getConnection();
-        String query = "SELECT nama_barang, des, harga, foto FROM barang WHERE id_barang = ?";
+        String query = "SELECT barang.nama_barang, barang.des, barang.harga, barang.foto, penjual.nama_toko, penjual.username FROM barang "
+                + "INNER JOIN penjual ON barang.id_penjual = penjual.id_penjual WHERE barang.id_barang = ?";
 
         try {
             PreparedStatement statement = conn.prepareStatement(query);
@@ -24,8 +25,10 @@ public class DaoDeskripsiProduk {
                 String des = resultSet.getString("des");
                 int harga = resultSet.getInt("harga");
                 byte[] gambar = resultSet.getBytes("foto");
+                String nama_toko = resultSet.getString("nama_toko");
+                String username = resultSet.getString("username");
 
-                produk = new DeskripsiProdukModel(nama_barang, des, harga, gambar);
+                produk = new DeskripsiProdukModel(nama_barang, des, harga, gambar, nama_toko, username);
             }
         } catch (SQLException e) {
             e.printStackTrace();

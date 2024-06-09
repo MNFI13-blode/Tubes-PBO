@@ -13,12 +13,15 @@ public class DeskripsiProdukModel {
     private String nama_barang,des;
     private int harga;
     private byte[] gambar;
+    private String nama_toko, username;
 
-    public DeskripsiProdukModel(String nama_barang, String des, int harga, byte[] gambar) {
+    public DeskripsiProdukModel(String nama_barang, String des, int harga, byte[] gambar, String nama_toko, String username) {
         this.nama_barang = nama_barang;
         this.des = des;
         this.harga = harga;
         this.gambar = gambar;
+        this.nama_toko = nama_toko;
+        this.username = username;
     }
 
     public String getNama_barang() {
@@ -52,4 +55,21 @@ public class DeskripsiProdukModel {
     public void setGambarProduk(byte[] gambar) {
         this.gambar = gambar;
     }
+
+    public String getNama_toko() {
+        return nama_toko;
+    }
+
+    public void setNama_toko(String nama_toko) {
+        this.nama_toko = nama_toko;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
 }
