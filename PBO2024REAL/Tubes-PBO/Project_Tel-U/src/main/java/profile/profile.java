@@ -5,6 +5,9 @@
  */
 package profile;
 import model.model_pengguna;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,16 +18,33 @@ import service.service_profil;
  * @author LENOVO
  */
 public class profile extends javax.swing.JFrame {
-    private model_pengguna currentUser;
-    private service_profil profileService;
+    private model.model_pengguna currentUser;
+    private service.service_profil profileService;
     /**
      * Creates new form profile
      */
     public profile() {
-        profileService = new service_profil() {};
         initComponents();
+        initializeUser;
     }
-
+    private void initializeUser() {
+        try {
+            // Assuming id_pengguna is fetched or provided somehow
+            String id_pengguna = "1"; // replace with actual id_pengguna
+            service_profil serviceProfile = new service_profil();
+            currentUser = serviceProfile.getmodel_pengguna(id_pengguna);
+            if (currentUser != null) {
+                jTextField1.setText(currentUser.getUsername());
+                jTextField2.setText(currentUser.getEmail());
+                jTextField3.setText(currentUser.getAlamat());
+                jComboBox1.setSelectedItem(currentUser.getRole());
+            } else {
+                System.out.println("User not found!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,7 +111,6 @@ public class profile extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Username");
 
-        jTextField1.setText("Usernamemu");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -103,7 +122,6 @@ public class profile extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Email");
 
-        jTextField2.setText("Emailmu");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -115,7 +133,6 @@ public class profile extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Alamat");
 
-        jTextField3.setText("Alamatmu");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -206,7 +223,7 @@ public class profile extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -258,14 +275,16 @@ public class profile extends javax.swing.JFrame {
         }
     }
    private void updateUserProfile() throws SQLException {
-        currentUser.setUsername(jTextField1.getText());
-        currentUser.setEmail(jTextField2.getText());
-        currentUser.setAlamat(jTextField3.getText());
-        currentUser.setRole((String) jComboBox1.getSelectedItem());
-
-        // Implement a method to update the user profile in the service and DAO
-        profileService.updateProfile(currentUser);
-        JOptionPane.showMessageDialog(this, "Profile updated successfully!");
+        if (currentUser != null) {
+            currentUser.setUsername(jTextField1.getText());
+            currentUser.setEmail(jTextField2.getText());
+            currentUser.setAlamat(jTextField3.getText());
+            currentUser.setRole(jComboBox1.getSelectedItem().toString());
+        // Save or update the currentUser as needed
+        } else {
+            System.out.println("Current user is not initialized!");
+            // Handle the case where currentUser is null
+        }
     }
    
     public static void main(String args[]) {
