@@ -4,17 +4,21 @@
  */
 package main;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author HP
  */
 public class DeskripsiProduk extends javax.swing.JFrame {
-
+    int xx, xy;
     /**
      * Creates new form DeskripsiProduk
      */
     public DeskripsiProduk() {
         initComponents();
+        tampilDataDeskripsi(1);
     }
 
     /**
@@ -26,146 +30,166 @@ public class DeskripsiProduk extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        FormDeskripsi = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        label_gambar = new javax.swing.JLabel();
+        label_nama = new javax.swing.JLabel();
+        label_harga = new javax.swing.JLabel();
+        label_deskripsi = new javax.swing.JLabel();
+        btn_beli = new javax.swing.JButton();
+        btn_keranjang = new javax.swing.JButton();
+        btn_close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("gambar produk");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(159, 21, 33)));
+        FormDeskripsi.setOpaque(false);
+        FormDeskripsi.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                FormDeskripsiMouseDragged(evt);
+            }
+        });
+        FormDeskripsi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                FormDeskripsiMousePressed(evt);
+            }
+        });
 
-        jLabel2.setText("Nama Produk");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("Deskripsi Produk");
 
-        jLabel3.setText("Harga Produk");
+        label_gambar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(159, 21, 33)));
 
-        jLabel4.setText("Deskripsi");
+        label_nama.setText("Nama Produk");
 
-        jButton1.setText("Beli");
+        label_harga.setText("Harga Produk");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/tambah ke keranjang-resize 3.jpg"))); // NOI18N
-        jButton2.setText("Tambah ke keranjang");
+        label_deskripsi.setText("Deskripsi");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
-        jLabel5.setText("X");
+        btn_beli.setText("Beli");
 
-        jLabel1.setText("gambar produk");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(159, 21, 33)));
+        btn_keranjang.setText("Tambah ke Keranjang");
 
-        jLabel2.setText("Nama Produk");
+        btn_close.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
+        btn_close.setText("X");
+        btn_close.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_closeMouseClicked(evt);
+            }
+        });
 
-        jLabel3.setText("Deskripsi");
-
-        jLabel4.setText("Harga");
-
-        jButton1.setText("Beli");
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/tambah ke keranjang-resize 3.jpg"))); // NOI18N
-        jButton2.setText("Tambah ke keranjang");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel5))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                                .addComponent(jButton2)))
-                        .addGap(27, 27, 27))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(47, 47, 47))))
+        javax.swing.GroupLayout FormDeskripsiLayout = new javax.swing.GroupLayout(FormDeskripsi);
+        FormDeskripsi.setLayout(FormDeskripsiLayout);
+        FormDeskripsiLayout.setHorizontalGroup(
+            FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                        .addGap(242, 242, 242)
+                        .addComponent(jLabel1))
+                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_nama)
+                            .addComponent(label_harga)
+                            .addComponent(label_deskripsi))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_close, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FormDeskripsiLayout.createSequentialGroup()
+                        .addComponent(btn_beli)
+                        .addGap(54, 54, 54)
+                        .addComponent(btn_keranjang)))
+                .addGap(27, 27, 27))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel5)
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2)
-                .addGap(66, 66, 66)
-                .addComponent(jLabel3)
-                .addGap(66, 66, 66)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(57, 57, 57))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel2)
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel4)
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel3)
+        FormDeskripsiLayout.setVerticalGroup(
+            FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel1))
+                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(btn_close)))
+                .addGap(18, 18, 18)
+                .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(FormDeskripsiLayout.createSequentialGroup()
+                        .addComponent(label_nama)
+                        .addGap(52, 52, 52)
+                        .addComponent(label_harga)
+                        .addGap(54, 54, 54)
+                        .addComponent(label_deskripsi)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_beli)
+                            .addComponent(btn_keranjang))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(FormDeskripsi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(FormDeskripsi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_closeMouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btn_closeMouseClicked
+
+    private void FormDeskripsiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FormDeskripsiMousePressed
+        // TODO add your handling code here:
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_FormDeskripsiMousePressed
+
+    private void FormDeskripsiMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FormDeskripsiMouseDragged
+        // TODO add your handling code here:
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_FormDeskripsiMouseDragged
+    
+    public void tampilDataDeskripsi(int id_barang){
+        DaoDeskripsiProduk dao = new DaoDeskripsiProduk();
+        DeskripsiProdukModel produk = dao.getProdukById(id_barang);
+        if(produk != null){
+            String nama_barang = produk.getNama_barang();
+            label_nama.setText(nama_barang);
+            String deskripsi = produk.getDeskripsi();
+            label_deskripsi.setText(deskripsi);
+            String harga = Integer.toString(produk.getHargaProduk());
+            label_harga.setText(harga);
+        }else{
+            label_nama.setText("Produk tidak ditemukan");
+        }
+        
+        byte[] gambar = produk.getGambarProduk();
+        if(gambar != null){
+            ImageIcon icon = new ImageIcon(gambar);
+            Image image = icon.getImage();
+            
+            int lebarLabel = label_gambar.getWidth();
+            int tinggiLabel = label_gambar.getHeight();
+            
+            Image GambarBaru = image.getScaledInstance(lebarLabel, tinggiLabel, Image.SCALE_SMOOTH);
+            ImageIcon newIcon = new ImageIcon(GambarBaru);
+            label_gambar.setIcon(newIcon);
+        }else{
+            label_gambar.setText("Gambar tidak tersedia");
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -202,14 +226,14 @@ public class DeskripsiProduk extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JPanel FormDeskripsi;
+    private javax.swing.JButton btn_beli;
+    private javax.swing.JLabel btn_close;
+    private javax.swing.JButton btn_keranjang;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel label_deskripsi;
+    private javax.swing.JLabel label_gambar;
+    private javax.swing.JLabel label_harga;
+    private javax.swing.JLabel label_nama;
     // End of variables declaration//GEN-END:variables
 }
