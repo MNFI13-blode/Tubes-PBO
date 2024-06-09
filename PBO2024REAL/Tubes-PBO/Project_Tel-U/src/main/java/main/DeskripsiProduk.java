@@ -82,13 +82,11 @@ public class DeskripsiProduk extends javax.swing.JFrame {
 
         label_username.setText("Username Penjual");
 
-        jPanel1.setBackground(new java.awt.Color(255, 0, 0));
-        jPanel1.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(159, 21, 33));
 
         label_gambar.setBackground(new java.awt.Color(255, 255, 255));
-        label_gambar.setForeground(new java.awt.Color(255, 255, 255));
         label_gambar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_gambar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        label_gambar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
