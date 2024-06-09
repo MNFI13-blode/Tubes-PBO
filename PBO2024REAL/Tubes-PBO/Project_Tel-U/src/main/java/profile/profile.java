@@ -4,20 +4,30 @@
  * and open the template in the editor.
  */
 package profile;
-
+import model.model_pengguna;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import service.service_profil;
 /**
  *
  * @author LENOVO
  */
 public class profile extends javax.swing.JFrame {
-
+    private model.model_pengguna currentUser;
+    private service.service_profil serviceProfile;
     /**
      * Creates new form profile
      */
     public profile() {
         initComponents();
+        serviceProfile = new service_profil() {}; // Initialize the service
+        loadUserProfile("1"); // Replace with actual id_pengguna
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,7 +94,6 @@ public class profile extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Username");
 
-        jTextField1.setText("Usernamemu");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -96,7 +105,6 @@ public class profile extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Email");
 
-        jTextField2.setText("Emailmu");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -108,7 +116,6 @@ public class profile extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Alamat");
 
-        jTextField3.setText("Alamatmu");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -199,7 +206,7 @@ public class profile extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -226,16 +233,45 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try {
+            updateUserProfile();
+        } catch (SQLException ex) {
+            Logger.getLogger(profile.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+   private void loadUserProfile(String id_pengguna) {
+        try {
+            currentUser = serviceProfile.getmodel_pengguna(id_pengguna);
+            if (currentUser != null) {
+                jTextField1.setText(currentUser.getUsername());
+                jTextField2.setText(currentUser.getEmail());
+                jTextField3.setText(currentUser.getAlamat());
+                jComboBox1.setSelectedItem(currentUser.getRole());
+            } else {
+                JOptionPane.showMessageDialog(this, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading user profile!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+   private void updateUserProfile() throws SQLException {
+        if (currentUser != null) {
+            currentUser.setUsername(jTextField1.getText());
+            currentUser.setEmail(jTextField2.getText());
+            currentUser.setAlamat(jTextField3.getText());
+            currentUser.setRole(jComboBox1.getSelectedItem().toString());
+            // Add save/update logic here, e.g., calling a service method to persist the changes
+        } else {
+            JOptionPane.showMessageDialog(this, "No user is loaded to update!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
