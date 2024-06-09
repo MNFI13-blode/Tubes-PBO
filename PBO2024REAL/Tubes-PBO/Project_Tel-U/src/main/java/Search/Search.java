@@ -1,14 +1,23 @@
-package Search;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+package Search;
+
+import config.koneksi;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author A S U S
  */
+
 public class Search extends javax.swing.JFrame {
 
     /**
@@ -16,7 +25,78 @@ public class Search extends javax.swing.JFrame {
      */
     public Search() {
         initComponents();
+        addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+                // Panggil method untuk menutup aplikasi
+                onClose();
+            }
+        });
     }
+
+    private void onClose() {
+        // Menutup jendela
+        dispose();
+        // Keluar dari aplikasi
+        System.exit(0);
+    }
+    //refresh table
+    private void refreshTable() {
+        refreshTable(null);
+    }
+
+    private void refreshTable(String searchQuery) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear the table
+
+        // Get the connection from the koneksi class
+        Connection conn = koneksi.getConnection();
+
+        // Base query to fetch data from the table
+        String query = "SELECT * FROM barang";
+
+        // If search query is provided, add a WHERE clause
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            query += " WHERE nama_barang LIKE ?";
+        }
+
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+
+            // If search query is provided, set it as a parameter for the prepared statement
+            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                statement.setString(1, "%" + searchQuery + "%");
+            }
+
+            ResultSet rs = statement.executeQuery();
+
+            // Add the data from the result set to the table
+            while (rs.next()) {
+                String id_barang = rs.getString("id_barang");
+                byte[] foto = rs.getBytes("foto");
+                String nama_barang = rs.getString("nama_barang");
+                String jenis_barang = rs.getString("jenis_barang");
+                int harga = rs.getInt("harga");
+
+                // Create a model object based on the retrieved data
+                search_model barang = new search_model(id_barang, foto, nama_barang, jenis_barang, harga);
+
+                // Create an array object that contains the item data
+                Object[] row = {barang.getFoto(), barang.getNama_barang(), barang.getJenis_barang(), barang.getHarga()};
+
+                // Add the row to the table
+                model.addRow(row);
+            }
+
+            // Close statement and result set
+            statement.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,171 +108,133 @@ public class Search extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        Product_1 = new javax.swing.JButton();
-        Product_4 = new javax.swing.JButton();
-        Product_2 = new javax.swing.JButton();
-        Product_7 = new javax.swing.JButton();
-        Product_5 = new javax.swing.JButton();
-        Product_8 = new javax.swing.JButton();
-        Product_3 = new javax.swing.JButton();
-        Product_6 = new javax.swing.JButton();
-        Product_9 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        btnsearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnrefresh = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setIcon(new javax.swing.ImageIcon(System.clearProperty("user.dir")+"\\src\\main\\java\\Img\\Logo.png"));
+        jButton1.setText("Tel-U Market");
+        jButton1.setBorder(null);
+
+        btnsearch.setText("Cari");
+        btnsearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                btnsearchActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Cari Barang");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Foto", "Nama", "Jenis", "Harga"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setColumnSelectionAllowed(true);
+        jTable1.setRowHeight(90);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
+        }
+
+        btnrefresh.setText("Refresh");
+        btnrefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnrefreshActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Logo.png"))); // NOI18N
-        jButton3.setText("Tel-U Market");
-        jButton3.setBorder(null);
+        jPanel2.setBackground(new java.awt.Color(255, 0, 0));
 
-        Product_1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_1.setText("Joyko 2B"); // NOI18N
-        Product_1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_1ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 47, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
-        Product_4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_4.setText("Joyko 2B"); // NOI18N
-        Product_4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_4ActionPerformed(evt);
-            }
-        });
+        jPanel3.setBackground(new java.awt.Color(255, 0, 51));
 
-        Product_2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_2.setText("Joyko 2B"); // NOI18N
-        Product_2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_2ActionPerformed(evt);
-            }
-        });
-
-        Product_7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_7.setText("Joyko 2B"); // NOI18N
-        Product_7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_7ActionPerformed(evt);
-            }
-        });
-
-        Product_5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_5.setText("Joyko 2B"); // NOI18N
-        Product_5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_5ActionPerformed(evt);
-            }
-        });
-
-        Product_8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_8.setText("Joyko 2B"); // NOI18N
-        Product_8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_8ActionPerformed(evt);
-            }
-        });
-
-        Product_3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_3.setText("Joyko 2B"); // NOI18N
-        Product_3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_3ActionPerformed(evt);
-            }
-        });
-
-        Product_6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_6.setText("Joyko 2B"); // NOI18N
-        Product_6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_6ActionPerformed(evt);
-            }
-        });
-
-        Product_9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Joyko-Hijau.jpg"))); // NOI18N
-        Product_9.setText("Joyko 2B"); // NOI18N
-        Product_9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Product_9ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 47, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Product_1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Product_2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Product_4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Product_5))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Product_7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Product_8)))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Product_3)
-                            .addComponent(Product_6)
-                            .addComponent(Product_9)))
+                                .addComponent(jTextField1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnsearch)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnrefresh))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(120, 120, 120)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Product_1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Product_2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Product_3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnsearch)
+                    .addComponent(btnrefresh))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Product_4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Product_5, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Product_6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Product_7, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Product_8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Product_9, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,59 +251,21 @@ public class Search extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnrefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrefreshActionPerformed
+        refreshTable();
+        jTextField1.setText("");
+    }//GEN-LAST:event_btnrefreshActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void Product_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_1ActionPerformed
-
-    private void Product_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_2ActionPerformed
-
-    private void Product_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_3ActionPerformed
-
-    private void Product_4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_4ActionPerformed
-
-    private void Product_5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_5ActionPerformed
-
-    private void Product_6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_6ActionPerformed
-
-    private void Product_7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_7ActionPerformed
-
-    private void Product_8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_8ActionPerformed
-
-    private void Product_9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Product_9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Product_9ActionPerformed
+    private void btnsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsearchActionPerformed
+       String searchQuery = jTextField1.getText();
+       refreshTable(searchQuery);
+    }//GEN-LAST:event_btnsearchActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        // Set look and feel
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -269,16 +273,12 @@ public class Search extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Search.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Search.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Search.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Search.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+
+        // Initialize ImageRenderer
+        ImageRenderer imageRenderer = new ImageRenderer();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -288,20 +288,18 @@ public class Search extends javax.swing.JFrame {
         });
     }
 
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Product_1;
-    private javax.swing.JButton Product_2;
-    private javax.swing.JButton Product_3;
-    private javax.swing.JButton Product_4;
-    private javax.swing.JButton Product_5;
-    private javax.swing.JButton Product_6;
-    private javax.swing.JButton Product_7;
-    private javax.swing.JButton Product_8;
-    private javax.swing.JButton Product_9;
+    private javax.swing.JButton btnrefresh;
+    private javax.swing.JButton btnsearch;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
 }
