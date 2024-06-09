@@ -3,19 +3,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 /**
  *
  * @author oyest
  */
 public class model_register {
+
+    
+
+    /**
+     * @return the image
+     */
+    public InputStream getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(InputStream image) {
+        this.image = image;
+    }
     private String id_pembeli;
     private String Username;
     private String password;
     private String alamatl;
     private String Email;
     private String role;
-
+    private InputStream image;
+    
     public String getId_pembeli() {
         return id_pembeli;
     }

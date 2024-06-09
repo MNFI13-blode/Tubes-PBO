@@ -21,6 +21,8 @@ import model.model_register;
 import service.service_register;
 import login_and_register.FromLogin;
 import java.util.UUID;
+import java.io.InputStream;
+import java.io.IOException; 
 
 
 
@@ -51,7 +53,7 @@ public class dao_register implements service_register {
 
     @Override
     public void registerUser(model_register log)  throws SQLException {
-        String  query = "INSERT INTO pengguna (id_pembeli, username, password, alamat, email, role) VALUES(?,?,?,?,?,?)";
+        String  query = "INSERT INTO pengguna (id_pembeli, username, password, alamat, email, role,foto) VALUES(?,?,?,?,?,?,?)";
         PreparedStatement pstmt = conn.prepareStatement(query);
         String userID = generateShortUUID();
         
@@ -62,6 +64,17 @@ public class dao_register implements service_register {
         pstmt.setString(4, log.getAlamatl());
         pstmt.setString(5, log.getEmail());
         pstmt.setString(6, log.getRole());
+        
+       if(log.getImage() != null){
+           try(InputStream imageStream = log.getImage()){
+               pstmt.setBlob(7, log.getImage());
+           }catch(IOException ex){
+               ex.printStackTrace();
+           }
+           
+       }else{
+            pstmt.setNull(7, java.sql.Types.BLOB);
+       }
         pstmt.executeUpdate();
         
         log.setId_pembeli(userID);

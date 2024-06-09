@@ -58,4 +58,6 @@ public class PictureBox extends JLayeredPane {
     private Image toImage(Icon icon) {
         return ((ImageIcon) icon).getImage();
     }
+
+    
 }

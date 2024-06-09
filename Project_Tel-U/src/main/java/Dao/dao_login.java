@@ -23,7 +23,11 @@ import service.service_login;
 import login_and_register.FromLogin;
 import config.token;
 import homePage.home;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import model.model_pengguna;
+import model.model_register;
 
 /**
  *
@@ -36,6 +40,32 @@ public class dao_login implements service_login {
         conn = koneksi.getConnection();
     }
 
+    @Override
+    public model_pengguna getUserByUsername(String username) throws SQLException {
+              model_pengguna user = null;
+        String sql = "SELECT * FROM pengguna WHERE username=?";
+        try (PreparedStatement st = conn.prepareStatement(sql)) {
+            st.setString(1, username);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    InputStream foto = rs.getBinaryStream("foto");
+                    user = new model_pengguna(
+                        rs.getString("id_pembeli"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("alamat"),
+                        rs.getString("email"),
+                        rs.getString("role"),
+                        foto
+                    );
+                }
+            }
+        }
+        return user;
+    }
+
+    
+    
     @Override
     public void prosesLogin(model_login log) {
         PreparedStatement st = null;
@@ -59,7 +89,7 @@ public class dao_login implements service_login {
                 
                 String token1 = token.generateToken(nama);
                 
-                home menu  = new home();
+                home menu  = new home(token1);
                 menu.setVisible(true);
                 menu.revalidate();
                 
@@ -74,6 +104,8 @@ public class dao_login implements service_login {
             }
         }catch(SQLException ex){
             Logger.getLogger(dao_login.class.getName()).log(Level.SEVERE,null,ex);
+        } catch (IOException ex) {
+            Logger.getLogger(dao_login.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             if(st!= null){
                 try{
@@ -85,6 +117,8 @@ public class dao_login implements service_login {
         }
         
     }
+    
+    
     
     
     

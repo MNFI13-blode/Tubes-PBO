@@ -12,10 +12,28 @@ import javax.swing.ImageIcon;
 import service.service_item;
 import java.util.List;
 import Dao.dao_ShowItem;
+import java.awt.Dimension;
+import java.awt.Point;
 import service.service_ItemDAO;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.TimingTargetAdapter;
+import org.jdesktop.animation.timing.interpolation.PropertySetter;
+import config.token;
+import login_and_register.FromLogin;
+import Dao.dao_login;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import service.service_login;
+import model.model_pengguna;
 /**
  *
  * @author oyest
@@ -24,24 +42,82 @@ public class home extends javax.swing.JFrame {
       int xx,xy;
       private main mainU;
       private service_ItemDAO itemDao;
-    
+      private Animator animator;
+      private Point animatePoint;
+      private modelItem itemSelected;
+      private String token1;
+      private String username;
+      private service_login service;
     /**
      * Creates new form home
+     * @param token1
      */
-    public home() {
-      
+    public home(String token1) throws IOException {
+        this.token1 = token1;
+        this.username = token.getUsernameFromToken(token1);
         initComponents();
         setBackground(new Color(0,0,0,0));
         itemDao = new dao_ShowItem();
+  
         init();
+        //  Animator start form animatePoint to TagetPoint
+        animator = PropertySetter.createAnimator(500, mainPanel, "ImageLocation", animatePoint, mainPanel.getTargetLocation());
+        animator.addTarget(new PropertySetter(mainPanel, "imageSize", new Dimension(180, 120), mainPanel.getTargetSize()));
+        animator.addTarget(new TimingTargetAdapter() {
+            @Override
+            public void end() {
+                mainPanel.setImageOld(null);
+            }
+        });
+        animator.setResolution(0);
+        animator.setAcceleration(.5f);
+        animator.setDeceleration(.5f);
+        
+           if (!isTokenValid()) {
+            JOptionPane.showMessageDialog(this, "Token tidak valid atau telah kadaluarsa, silakan login kembali.", "Error", JOptionPane.ERROR_MESSAGE);
+            new FromLogin().setVisible(true);
+            this.dispose();
+        }
+    }
+     private boolean isTokenValid() {
+        return token.validateToken(this.token1);
+    }
+         private void loadUserData() {
+        try {
+            model_pengguna user = service.getUserByUsername(username);
+            if (user != null && user.getFoto() != null) {
+                displayImage(user.getFoto());
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+       }
+     private void displayImage(InputStream foto) throws IOException {
+        if (foto != null) {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            byte[] data = new byte[1024];
+            int nRead;
+            while ((nRead = foto.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+            buffer.flush();
+            ImageIcon imageIcon = new ImageIcon(buffer.toByteArray());
+            imageAvatar2.setImage(imageIcon);
+        }
     }
     
-    private void init(){
+    
+    private void init() throws IOException{
           mainU = new main();
           mainPanel.setLayout(new BorderLayout());
           mainPanel.add(mainU);
           testData();
           setLocationRelativeTo(null);
+          jLabel1.setText("Selamat Datang  " + username);
+          service = new dao_login();
+          loadUserData();
+       
+          
     }
 
     /**
@@ -55,6 +131,8 @@ public class home extends javax.swing.JFrame {
 
         background1 = new swing.Background();
         header = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        imageAvatar2 = new swing.ImageAvatar();
         mainPanel = new swing.MainPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,15 +151,34 @@ public class home extends javax.swing.JFrame {
         header.setBackground(new java.awt.Color(159, 21, 33));
         header.setForeground(new java.awt.Color(159, 21, 33));
 
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(76, 76, 76));
+        jLabel1.setText("Selamat Datang ");
+
+        imageAvatar2.setBorderColor(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1102, Short.MAX_VALUE)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(imageAvatar2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(584, Short.MAX_VALUE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 75, Short.MAX_VALUE)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(imageAvatar2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         mainPanel.setBackground(new java.awt.Color(159, 21, 33));
@@ -94,7 +191,7 @@ public class home extends javax.swing.JFrame {
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 485, Short.MAX_VALUE)
+            .addGap(0, 506, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout background1Layout = new javax.swing.GroupLayout(background1);
@@ -108,8 +205,9 @@ public class home extends javax.swing.JFrame {
             background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(background1Layout.createSequentialGroup()
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,19 +232,34 @@ public class home extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xx,y - xy);  
     }//GEN-LAST:event_formMouseDragged
-
+                    
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
              xx = evt.getX();
              xy = evt.getY();
     }//GEN-LAST:event_formMousePressed
+  
     private void testData(){
         mainU.setEvent(new service_item(){
             @Override
             public void itemClick(Component com, modelItem item) {
                 System.out.println(item.getItemID());
-                mainU.setSelected(com);
-                mainU.showItem(item);
+               
+                if(itemSelected != item){
+                    if(!animator.isRunning()){
+                        itemSelected=item;
+                        animatePoint = getLocationOf(com);
+                        mainPanel.setImage(item.getImage());
+                        mainPanel.setImageLocation(animatePoint);
+                        mainPanel.setImageSize(new Dimension(180, 120));
+                        mainPanel.repaint();
+                        mainU.setSelected(com);
+                        mainU.showItem(item);
+                        animator.start();
+                        
+                    }
+                }
+
             }
             
         });
@@ -165,6 +278,16 @@ public class home extends javax.swing.JFrame {
 //            }
         
         
+    }
+     private Point getLocationOf(Component com) {
+        Point p = mainU.getPanelLocation();
+        int x = p.x;
+        int y = p.y;
+        int itemX = com.getX();
+        int itemY = com.getY();
+        int left = 10;
+        int top = 35;
+        return new Point(x + itemX + left, y + itemY + top);
     }
     
 
@@ -198,7 +321,11 @@ public class home extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new home().setVisible(true);
+                try {
+                    new home("dummyToken").setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(home.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -206,6 +333,8 @@ public class home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Background background1;
     private javax.swing.JPanel header;
+    private swing.ImageAvatar imageAvatar2;
+    private javax.swing.JLabel jLabel1;
     private swing.MainPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }

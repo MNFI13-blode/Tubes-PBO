@@ -39,11 +39,11 @@ public class Item extends javax.swing.JPanel {
         this.data = data;
         pictureBox1.setImage(data.getImage());
         lbItemName.setText(data.getItemName());
-//       lbDescription.setText("<html>" + wrapText(data.getDescription(), 1) + "</html>");
-         lbDescription.setText(truncateText(data.getDescription(), 20));
-//        lbDescription.setText(data.getDescription());
+//      lbDescription.setText("<html>" + wrapText(data.getDescription(), 1) + "</html>");
+        lbDescription.setText(truncateText(data.getDescription(), 20));
+//      lbDescription.setText(data.getDescription());
         lbBrand.setText(data.getBrandName());
-        DecimalFormat df = new DecimalFormat("$#,##0.00");
+        DecimalFormat df = new DecimalFormat("RP #,##0.00");
         lbPrice.setText(df.format(data.getPrice()));
     }
     

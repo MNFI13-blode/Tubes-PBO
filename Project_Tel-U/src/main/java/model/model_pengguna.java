@@ -18,15 +18,18 @@ public class model_pengguna {
     private String role;
     private InputStream foto;
 
-    public model_pengguna(String id_pengguna, String username, String password, String alamat, String email, String role, byte[] data) {
+    public model_pengguna(String id_pengguna, String username, String password, String alamat, String email, String role, InputStream foto) {
         this.id_pengguna = id_pengguna;
         this.username = username;
         this.password = password;
         this.alamat = alamat;
         this.email = email;
         this.role = role;
-        this.foto = new ByteArrayInputStream(data);
+         this.foto = foto;
+       
     }
+
+  
     
     
     public String getId_pengguna() {
