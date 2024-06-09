@@ -16,11 +16,11 @@ import java.sql.ResultSet;
  * @author LENOVO
  */
 public class dao_profile {
-    public model_pengguna getmodel_pengguna(int id) throws SQLException {
+    public model_pengguna getmodel_pengguna(String id_pengguna) throws SQLException {
         String query = "SELECT * FROM user_profile WHERE id = ?";
         try (Connection connection = koneksi.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, id);
+            stmt.setString(1, id_pengguna);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 model_pengguna profile = new model_pengguna();
@@ -28,6 +28,7 @@ public class dao_profile {
                 profile.setUsername(rs.getString("name"));
                 profile.setEmail(rs.getString("email"));
                 profile.setAlamat(rs.getString("address"));
+                profile.setRole(rs.getString("role"));
                 return profile;
             }
         }

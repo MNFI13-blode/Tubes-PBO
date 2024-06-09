@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public interface service_profil {
     dao_profile daoProfile = new dao_profile();
 
-    default model_pengguna getmodel_pengguna(int id_pengguna) throws SQLException {
+    default model_pengguna getmodel_pengguna(String id_pengguna) throws SQLException {
         return daoProfile.getmodel_pengguna(id_pengguna);
     }
 

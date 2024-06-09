@@ -19,31 +19,14 @@ import service.service_profil;
  */
 public class profile extends javax.swing.JFrame {
     private model.model_pengguna currentUser;
-    private service.service_profil profileService;
+    private service.service_profil serviceProfile;
     /**
      * Creates new form profile
      */
     public profile() {
         initComponents();
-        initializeUser;
-    }
-    private void initializeUser() {
-        try {
-            // Assuming id_pengguna is fetched or provided somehow
-            String id_pengguna = "1"; // replace with actual id_pengguna
-            service_profil serviceProfile = new service_profil();
-            currentUser = serviceProfile.getmodel_pengguna(id_pengguna);
-            if (currentUser != null) {
-                jTextField1.setText(currentUser.getUsername());
-                jTextField2.setText(currentUser.getEmail());
-                jTextField3.setText(currentUser.getAlamat());
-                jComboBox1.setSelectedItem(currentUser.getRole());
-            } else {
-                System.out.println("User not found!");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        serviceProfile = new service_profil() {}; // Initialize the service
+        loadUserProfile("1"); // Replace with actual id_pengguna
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -261,17 +244,20 @@ public class profile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-   private void loadUserProfile() throws SQLException {
-        // Assuming you have the user ID. Replace "1" with the actual user ID you want to load.
-        int userId = 1;
-        currentUser = profileService.getmodel_pengguna(userId);
-        if (currentUser != null) {
-            jTextField1.setText(currentUser.getUsername());
-            jTextField2.setText(currentUser.getEmail());
-            jTextField3.setText(currentUser.getAlamat());
-            jComboBox1.setSelectedItem(currentUser.getRole());
-        } else {
-            JOptionPane.showMessageDialog(this, "User not found!");
+   private void loadUserProfile(String id_pengguna) {
+        try {
+            currentUser = serviceProfile.getmodel_pengguna(id_pengguna);
+            if (currentUser != null) {
+                jTextField1.setText(currentUser.getUsername());
+                jTextField2.setText(currentUser.getEmail());
+                jTextField3.setText(currentUser.getAlamat());
+                jComboBox1.setSelectedItem(currentUser.getRole());
+            } else {
+                JOptionPane.showMessageDialog(this, "User not found!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading user profile!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
    private void updateUserProfile() throws SQLException {
@@ -280,10 +266,9 @@ public class profile extends javax.swing.JFrame {
             currentUser.setEmail(jTextField2.getText());
             currentUser.setAlamat(jTextField3.getText());
             currentUser.setRole(jComboBox1.getSelectedItem().toString());
-        // Save or update the currentUser as needed
+            // Add save/update logic here, e.g., calling a service method to persist the changes
         } else {
-            System.out.println("Current user is not initialized!");
-            // Handle the case where currentUser is null
+            JOptionPane.showMessageDialog(this, "No user is loaded to update!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
    
