@@ -16,7 +16,6 @@ login_and_register\FromLogin$8.class
 Search\ButtonRenderer.class
 InfoProduk.class
 profile\profile$1.class
-Search\Detail.class
 Search\Search$1.class
 login_and_register\FormRegister$2.class
 login_and_register\FromLogin$10.class
@@ -28,7 +27,6 @@ login_and_register\FromLogin$7.class
 Search\search_model.class
 login_and_register\FromLogin$1.class
 login_and_register\FormRegister$5.class
-Search\Detail$1.class
 Search\Search$4.class
 login_and_register\FormRegister$8.class
 login_and_register\FromLogin$4.class
@@ -54,7 +52,6 @@ Search\Search.class
 profile\profile$3.class
 Search\ImageRenderer.class
 config\koneksi.class
-Search\PanelCustom.class
 Dao\dao_login.class
 login_and_register\FromLogin$9.class
 profile\profile$6.class
