@@ -17,7 +17,7 @@ import java.sql.ResultSet;
  */
 public class dao_profile {
     public model_pengguna getmodel_pengguna(String id_pengguna) throws SQLException {
-        String query = "SELECT * FROM user_profile WHERE id = ?";
+        String query = "SELECT * username, alamat, email, role FROM pengguna WHERE id_pembeli = 1";
         try (Connection connection = koneksi.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, id_pengguna);
@@ -34,16 +34,5 @@ public class dao_profile {
         }
         return null;
     }
-    public void updateProfile(model_pengguna user) throws SQLException {
-        String query = "UPDATE user_profile SET name = ?, email = ?, address = ?, role = ? WHERE id = ?";
-        try (Connection connection = koneksi.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getAlamat());
-            stmt.setString(4, user.getRole());
-            stmt.setString(5, user.getId_pengguna());
-            stmt.executeUpdate();
-        }
-    }
+    
 }

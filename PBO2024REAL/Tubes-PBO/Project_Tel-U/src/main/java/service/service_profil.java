@@ -17,9 +17,5 @@ public interface service_profil {
     default model_pengguna getmodel_pengguna(String id_pengguna) throws SQLException {
         return daoProfile.getmodel_pengguna(id_pengguna);
     }
-
-    default void updateProfile(model_pengguna user) throws SQLException {
-        daoProfile.updateProfile(user);
-    }
     
 }
