@@ -13,9 +13,6 @@ login_and_register\FormRegister.class
 login_and_register\FormRegister$4.class
 main\DeskripsiProduk$4.class
 login_and_register\FromLogin$8.class
-Search\ButtonEditor$1.class
-Search\ButtonEditor.class
-Search\ButtonRenderer.class
 Detail\DeskripsiProduk$2.class
 InfoProduk.class
 profile\profile$1.class
@@ -24,7 +21,6 @@ login_and_register\FormRegister$2.class
 login_and_register\FromLogin$10.class
 main\DeskripsiProduk$2.class
 main\DeskripsiProduk.class
-Search\ButtonColumn.class
 service\service_register.class
 profile\profile$4.class
 login_and_register\FromLogin$7.class
