@@ -44,8 +44,8 @@ public class DeskripsiProduk extends javax.swing.JFrame {
         label_gambar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
-        FormDeskripsi.setOpaque(false);
         FormDeskripsi.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 FormDeskripsiMouseDragged(evt);
@@ -102,7 +102,7 @@ public class DeskripsiProduk extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(label_gambar, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout FormDeskripsiLayout = new javax.swing.GroupLayout(FormDeskripsi);
@@ -121,7 +121,7 @@ public class DeskripsiProduk extends javax.swing.JFrame {
                                     .addComponent(label_harga)
                                     .addComponent(label_deskripsi)
                                     .addComponent(label_username))
-                                .addGap(0, 481, Short.MAX_VALUE))
+                                .addGap(0, 453, Short.MAX_VALUE))
                             .addGroup(FormDeskripsiLayout.createSequentialGroup()
                                 .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FormDeskripsiLayout.createSequentialGroup()
@@ -156,7 +156,7 @@ public class DeskripsiProduk extends javax.swing.JFrame {
                 .addComponent(label_harga)
                 .addGap(42, 42, 42)
                 .addComponent(label_deskripsi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
                 .addGroup(FormDeskripsiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_beli, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_keranjang, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -172,7 +172,7 @@ public class DeskripsiProduk extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(FormDeskripsi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(FormDeskripsi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
