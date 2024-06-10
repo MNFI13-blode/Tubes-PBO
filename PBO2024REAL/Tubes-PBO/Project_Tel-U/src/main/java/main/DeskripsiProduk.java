@@ -58,7 +58,7 @@ public class DeskripsiProduk extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Deskripsi Produk");
+        jLabel1.setText("Deskripsi Lengkap Produk");
 
         label_nama.setText("Nama Produk");
 
